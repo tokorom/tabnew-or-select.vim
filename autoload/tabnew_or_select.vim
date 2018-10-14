@@ -22,15 +22,17 @@ function! tabnew_or_select#run(...)
     return
   endif
 
-  let name = expand(a:1)
+  for name in a:000
+    let name = expand(name)
 
-  if bufexists(name)
-    let tabindex = tabnew_or_select#tabindex(name)
-    if tabindex > 0
-      execute '' . tabindex . 'tabnext'
-      return
+    if bufexists(name)
+      let tabindex = tabnew_or_select#tabindex(name)
+      if tabindex > 0
+        execute '' . tabindex . 'tabnext'
+        return
+      endif
     endif
-  endif
 
-  execute 'tabnew ' . name
+    execute 'tabnew ' . name
+  endfor
 endfunction
